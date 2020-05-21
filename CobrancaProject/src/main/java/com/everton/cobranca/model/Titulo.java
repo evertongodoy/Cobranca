@@ -12,6 +12,9 @@ import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+
 
 @Entity
 public class Titulo {
@@ -24,8 +27,10 @@ public class Titulo {
     
     // TemporalType.DATE, nao salva Hora Minutos Segundo.. Apenas o Data
     @Temporal(TemporalType.DATE)
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataVencimento;
     
+    @NumberFormat(pattern = "#,##0.00")
     private BigDecimal valor;
     
     @Enumerated(EnumType.STRING)  // EnumType.ORDINAL para Utilizar o Enum baseado em Numero
