@@ -3,7 +3,8 @@ package com.everton.cobranca.model;
 public enum StatusTitulo {
     
     PENDENTE("Pendente.."),
-    RECEBIDO("Recebido..");
+    RECEBIDO("Recebido.."),
+    CANCELADO("Cancelado..");
 
     private String desc;
 
