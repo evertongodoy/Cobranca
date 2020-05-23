@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.everton.cobranca.TitulosRepo;
 import com.everton.cobranca.model.Titulo;
@@ -22,15 +23,18 @@ public class TituloController {
     }
     
     @RequestMapping(method = RequestMethod.POST)
-    public String salvar(Titulo tituloCob) {
+    public ModelAndView salvar(Titulo tituloCob) {
         System.out.println(" ## Salvou titulo aqui = " + tituloCob.getDescricao());
         System.out.println(" ## Salvou titulo aqui = " + tituloCob.getStatus());
         System.out.println(" ## Salvou titulo aqui = " + tituloCob.getDataVencimento());
         System.out.println(" ## Salvou titulo aqui = " + tituloCob.getValor());
         
+        ModelAndView mv = new ModelAndView("CadastroTitulo");
+        mv.addObject("msg", "Titulo salvo corretamente");
+        
         titulosRepository.save(tituloCob);
         
-        return "CadastroTitulo";
+        return mv;
     }
     
     /*
