@@ -53,6 +53,11 @@ public class TituloController {
     }
     
     
+    @RequestMapping
+    public String pesquisar() {
+        return "PesquisaTitulos";
+    }
+    
     /*
      * Observacoes
      * Um POST em titulos, significa que vamos Salvar o Titulo   localhost:8080/titulos
