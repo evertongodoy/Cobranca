@@ -1,31 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-   xmlns:th="http://www.thymeleaf.org">
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+   layout:decorate="~{LayoutPadrao}">
+
+<!-- xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" 
+xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 
 <head>
-	<meta charset="UTF-8"/>
 	<title>Pesquisa de Titulo</title>
-	<link rel="stylesheet" type="text/css" href="/css/bootstrap.min.css"/>
-	<link rel="stylesheet" type="text/css" href="/css/style.css"/>
-	</head>
-<body>
+</head>
 
-	<nav class="navbar navbar-inverse navbar-static-top">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="#">
-                    <img alt="AlgaWorks" src="/images/logo-algaworks.png" />
-                </a>
-            </div>
-        </div>
-    </nav>
-    
-    <!-- Autocomplete no Eclise / Preferences / General / Keys / Content Assist -->
-    
+<section layout:fragment="conteudo">
+
     <div class="panel panel-default">
     	<div class="panel-heading">
-    		<h1 class="panel-title">Pesquisa de título</h1>
+    		<!-- Clearfix ajuda no ajuste dos conteudos flutuantes -->
+    		<div class="clearfix">
+    			<h1 class="panel-title aw-titulo-panel">Pesquisa de título</h1>
+    		    <a class="btn btn-link aw-link-panel" href="/titulos/novo">Cadastrar</a>
+    		</div>
     	</div>
+    	
     	<!--  Criando a tabela dos dados-->
 		<div class="panel-body">
 			<table class="table table-bordered table-striped">
@@ -48,10 +44,6 @@
 			</table>
 		</div>    	
     </div>
-    		
-    		
 
-	<script src="/js/jquery-3.5.0.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
-</body>
+</section>
 </html>

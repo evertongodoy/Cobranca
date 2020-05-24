@@ -30,6 +30,13 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/nz.net.ultraq.thymeleaf/thymeleaf-layout-dialect -->
+		<!-- https://github.com/ultraq/thymeleaf-layout-dialect/issues/194 -->
+		<dependency>
+		    <groupId>nz.net.ultraq.thymeleaf</groupId>
+		    <artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency> 
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
@@ -64,6 +71,23 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		 <!-- Isso remove os Warnings do Groove
+		 https://cinqict.nl/how-to-run-spock-with-the-newest-java-versions-without-the-annoying-warnings/
+		 
+		 <dependency>
+		    <groupId>org.spockframework</groupId>
+		    <artifactId>spock-core</artifactId>
+		    <version>2.0-M1-groovy-2.5</version>
+		    <scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.codehaus.groovy</groupId>
+		    <artifactId>groovy</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		 -->
+		
 	</dependencies>
 
 	<build>
@@ -72,7 +96,23 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			
+			<!-- Isso remove os Warnings do Groove
+			<plugin>
+			    <artifactId>maven-compiler-plugin</artifactId>
+			    <configuration>
+			        <source>11</source>
+			        <target>11</target>
+			    </configuration>
+			</plugin>
+			<plugin>
+			    <artifactId>maven-surefire-plugin</artifactId>
+			</plugin>
+			-->
+			
 		</plugins>
 	</build>
+	
+
 
 </project>
