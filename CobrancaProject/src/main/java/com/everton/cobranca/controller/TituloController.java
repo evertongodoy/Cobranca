@@ -2,9 +2,10 @@ package com.everton.cobranca.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.everton.cobranca.TitulosRepo;
@@ -22,7 +23,8 @@ public class TituloController {
     private TitulosRepo titulosRepository;
 
     //Return the name of the View
-    @RequestMapping(value = "/novo")
+    // @RequestMapping(value = "/novo")
+    @GetMapping(value = "/novo")
     public ModelAndView novo() {
         
         ModelAndView mv = new ModelAndView("CadastroTitulo");
@@ -31,7 +33,8 @@ public class TituloController {
         return mv;
     }
     
-    @RequestMapping(method = RequestMethod.POST)
+    // @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     public ModelAndView salvar(Titulo tituloCob) {
         System.out.println(" ## Salvou titulo aqui = " + tituloCob.getDescricao());
         System.out.println(" ## Salvou titulo aqui = " + tituloCob.getStatus());
@@ -53,9 +56,16 @@ public class TituloController {
     }
     
     
-    @RequestMapping
-    public String pesquisar() {
-        return "PesquisaTitulos";
+    //@RequestMapping
+    @GetMapping
+    public ModelAndView pesquisar() {
+        
+        List<Titulo> lstTit = titulosRepository.findAll();
+        
+        ModelAndView mv = new ModelAndView("PesquisaTitulos");
+        mv.addObject("lstTitulo", lstTit);
+        
+        return mv;
     }
     
     /*

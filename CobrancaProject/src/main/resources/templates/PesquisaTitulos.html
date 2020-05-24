@@ -37,8 +37,23 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 				</thead>
 				<!--  -->
 				<tbody>
+					<tr th:each="titulo : ${lstTitulo}">
+						<td class="text-center" th:text="${titulo.codigo}"></td>
+						<td th:text="${titulo.descricao}"></td>
+						<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>  <!-- Para formatar o dado na tela, utiliza-se 2x {}, sera automaticamente utilizado a formatacao da classe no Model, pelo atributo -->
+						<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td> <!-- Para concatentar uma String no text, utiliza-se o PIPE  |  |  -->
+						<td class="text-center">
+							<span class="label" th:text="${titulo.status.descricao}"
+								th:classappend="${titulo.pendente ? 'label-danger' : titulo.recebido ? 'label-success' : 'label-default' }"></span>
+						</td>
+						<td class="text-center"></td>
+					</tr>
+					<!-- No data found -  O "#" eh um utilitario para uso de Lists-->
 					<tr>
-						<td colspan="6">Nenhum titulo localizado</td>
+						<!-- IF -->
+						<td colspan="6" th:if="${#lists.isEmpty(lstTitulo)}">N&atilde;o existem registros</td>
+						<!-- ELSE -->
+						<td colspan="6" th:if="${not #lists.isEmpty(lstTitulo)}" th:text="|${#lists.size(lstTitulo)} registro(s)|"></td>
 					</tr>
 				</tbody>
 			</table>

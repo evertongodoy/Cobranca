@@ -15,6 +15,8 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 
+import net.bytebuddy.asm.Advice.This;
+
 
 @Entity
 public class Titulo {
@@ -71,6 +73,15 @@ public class Titulo {
     public void setStatus(StatusTitulo status) {
         this.status = status;
     }
+    
+    
+    public Boolean isPendente() {
+        return StatusTitulo.PENDENTE.equals(this.status);
+    }
+    public Boolean isRecebido() {
+        return StatusTitulo.RECEBIDO.equals(this.status);
+    }
+    
     
     
     // Hashcode and Equals No Mac -> Command+3, e digitar "ghc"
