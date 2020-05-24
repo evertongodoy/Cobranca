@@ -11,11 +11,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
-
-import net.bytebuddy.asm.Advice.This;
 
 
 @Entity
@@ -25,14 +28,20 @@ public class Titulo {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // O banco de dados que controla
     private Long codigo;
     
+    @NotBlank(message = "Informar uma descricao")
+    @Size(max = 60, message = "Descricao pode ter ate 60 caracteres")
     private String descricao;
     
     // TemporalType.DATE, nao salva Hora Minutos Segundo.. Apenas o Data
+    @NotNull(message = "Informe uma data de vencimento")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date dataVencimento;
     
+    @NotNull(message = "Informe um valor")
     @NumberFormat(pattern = "#,##0.00")
+    @DecimalMin(value = "0.01", message = "O valor deve ser maior que R$ 0,00")
+    @DecimalMax(value = "9999999.99", message = "O valor deve ser menor que R$ 10.000.000,00")
     private BigDecimal valor;
     
     @Enumerated(EnumType.STRING)  // EnumType.ORDINAL para Utilizar o Enum baseado em Numero

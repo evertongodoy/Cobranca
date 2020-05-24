@@ -2,6 +2,8 @@ package com.everton.cobranca.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.Errors;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.everton.cobranca.TitulosRepo;
 import com.everton.cobranca.model.StatusTitulo;
 import com.everton.cobranca.model.Titulo;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,23 +30,22 @@ public class TituloController {
         
         ModelAndView mv = new ModelAndView("CadastroTitulo");
         mv.addObject("lstStatusTitulo", StatusTitulo.values()); // Return an Array of Status Titulo
+        mv.addObject(new Titulo()); // TEM QUE SER O OBJETO, SEM UM NOME STRING, CASO CONTRARIO NA PAGINA, A TAG th:object="${titulo}"> NAO SERA RECONHECIDA
         
         return mv;
     }
     
     // @RequestMapping(method = RequestMethod.POST)
     @PostMapping
-    public ModelAndView salvar(Titulo tituloCob) {
-        System.out.println(" ## Salvou titulo aqui = " + tituloCob.getDescricao());
-        System.out.println(" ## Salvou titulo aqui = " + tituloCob.getStatus());
-        System.out.println(" ## Salvou titulo aqui = " + tituloCob.getDataVencimento());
-        System.out.println(" ## Salvou titulo aqui = " + tituloCob.getValor());
-        
+    public ModelAndView salvar(@Validated Titulo tituloCob, Errors err) {
         ModelAndView mv = new ModelAndView("CadastroTitulo");
-        mv.addObject("msg", "Titulo salvo corretamente");
+        if(err.hasErrors()) {
+            return mv;
+        }
         
         titulosRepository.save(tituloCob);
         
+        mv.addObject("msg", "Titulo salvo corretamente");
         return mv;
     }
     

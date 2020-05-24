@@ -61,12 +61,14 @@
 			<scope>runtime</scope>
 		</dependency>
 		
-		<!-- troquei porque por padrao estaa a biblioteca istack--> 
-		<dependency>
-		    <groupId>javax.validation</groupId>
-		    <artifactId>validation-api</artifactId>
-		</dependency>
-		 
+		<!-- troquei porque por padrao estaa a biblioteca istack --> 
+		<dependency> 
+	        <groupId>org.hibernate</groupId>
+	        <artifactId>hibernate-validator</artifactId>
+	        <version>6.0.13.Final</version>
+	    </dependency>
+	    
+	      
 		 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
