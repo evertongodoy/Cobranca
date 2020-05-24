@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.everton.cobranca.TitulosRepo;
 import com.everton.cobranca.model.StatusTitulo;
@@ -37,16 +38,15 @@ public class TituloController {
     
     // @RequestMapping(method = RequestMethod.POST)
     @PostMapping
-    public ModelAndView salvar(@Validated Titulo tituloCob, Errors err) {
-        ModelAndView mv = new ModelAndView("CadastroTitulo");
+    public String salvar(@Validated Titulo tituloCob, Errors err, RedirectAttributes attributes) {
         if(err.hasErrors()) {
-            return mv;
+            return "CadastroTitulo";
         }
         
         titulosRepository.save(tituloCob);
+        attributes.addFlashAttribute("msg", "Titulo salvo corretamente");
         
-        mv.addObject("msg", "Titulo salvo corretamente");
-        return mv;
+        return "redirect:/titulos/novo";
     }
     
     // Deixar um atributo disponivel para as paginas da view 
