@@ -55,6 +55,12 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 						<!-- ELSE -->
 						<td colspan="6" th:if="${not #lists.isEmpty(lstTitulo)}" th:text="|${#lists.size(lstTitulo)} registro(s)|"></td>
 					</tr>
+					
+					<!-- Class 2.12
+					     - Selection Variable Expressions = Ajuda a manter os dados na tela durante as validacoes
+					     - Message Expressions = Para Internacionalizacao u utilizar um arquivo de Properties
+					     - Link URL Expressions = Vai melhorar a utilizacao dos HREF
+					 -->
 				</tbody>
 			</table>
 		</div>    	
