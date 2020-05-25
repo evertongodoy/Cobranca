@@ -6,6 +6,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,18 +19,20 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "/titulos")
+@RequestMapping(path = "/titulos")
 public class TituloController {
+    
+    private static final String CADASTRO_VIEW = "CadastroTitulo";
     
     @Autowired
     private TitulosRepo titulosRepository;
 
     //Return the name of the View
     // @RequestMapping(value = "/novo")
-    @GetMapping(value = "/novo")
+    @GetMapping(path = "/novo")
     public ModelAndView novo() {
         
-        ModelAndView mv = new ModelAndView("CadastroTitulo");
+        ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
         mv.addObject("lstStatusTitulo", StatusTitulo.values()); // Return an Array of Status Titulo
         mv.addObject(new Titulo()); // TEM QUE SER O OBJETO, SEM UM NOME STRING, CASO CONTRARIO NA PAGINA, A TAG th:object="${titulo}"> NAO SERA RECONHECIDA
         
@@ -40,7 +43,7 @@ public class TituloController {
     @PostMapping
     public String salvar(@Validated Titulo tituloCob, Errors err, RedirectAttributes attributes) {
         if(err.hasErrors()) {
-            return "CadastroTitulo";
+            return CADASTRO_VIEW;
         }
         
         titulosRepository.save(tituloCob);
@@ -57,7 +60,7 @@ public class TituloController {
     
     
     //@RequestMapping
-    @GetMapping
+    @GetMapping()
     public ModelAndView pesquisar() {
         
         List<Titulo> lstTit = titulosRepository.findAll();
@@ -65,6 +68,15 @@ public class TituloController {
         ModelAndView mv = new ModelAndView("PesquisaTitulos");
         mv.addObject("lstTitulo", lstTit);
         
+        return mv;
+    }
+    
+    @GetMapping(path = "/{codigoTitulo}")
+    public ModelAndView editar(@PathVariable Long codigoTitulo) {
+        Titulo titulo = titulosRepository.getOne(codigoTitulo);
+        
+        ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
+        mv.addObject(titulo); 
         return mv;
     }
     

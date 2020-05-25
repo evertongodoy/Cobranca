@@ -25,6 +25,10 @@
     		</div>
     		
     		<div class="panel-body">
+    			
+    			<!-- Para evitar de DUPLICAR ao realizar a Edicao. Aula 2.15 16:44min-->
+    			<input type="hidden" th:field="*{codigo}">
+    		
 				<div class="form-group" th:classappend="${#fields.hasErrors('descricao')} ? has-error">
 					<label for="descricao" class="col-sm-2 control-label">Descrição</label>
 					<div class="col-sm-4"> 

@@ -46,7 +46,11 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 							<span class="label" th:text="${titulo.status.descricao}"
 								th:classappend="${titulo.pendente ? 'label-danger' : titulo.recebido ? 'label-success' : 'label-default' }"></span>
 						</td>
-						<td class="text-center"></td>
+						<td class="text-center">
+							<a class="btn btn-link btn-xs" th:href="@{/titulos/ {codigoTituloVar} ( codigoTituloVar = ${titulo.codigo} ) }">
+								<span class="glyphicon glyphicon-pencil"></span>
+							</a>
+						</td>
 					</tr>
 					<!-- No data found -  O "#" eh um utilitario para uso de Lists-->
 					<tr>
