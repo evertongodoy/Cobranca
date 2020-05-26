@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+   xmlns:th="http://www.thymeleaf.org"
+   xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+   
+	<div class="modal fade" tabindex="-1" id="modalConfirmacaoExclusao" data-keyboard="false" data-backdrop="static">
+		<div class="modal-dialog">
+			
+			<form action="/titulos/del/" method="POST">  <!-- DELETE? No, GET and POST are the only valid HTTP method values for the method attribute. -->
+				
+				<input type="hidden" name="_method" value="delete">
+				
+				<div class="modal-content">
+				
+					<!-- Cabecalho do Modal -->
+					<div class="modal-header">
+						<h4 class="modal-title">Confirmar a exclusao ?</h4>
+					</div>
+					
+					<!-- Corpo do Modal -->
+					<div class="modal-body">
+						<span>Tem certeza que mais uma vez.... ??</span>
+					</div>
+					
+					<!-- Rodape do Modal -->
+					<div class="modal-footer">
+						<button type="button" class="btn btn-link" data-dismiss="modal">Cancelar</button>
+						<button type="submit" class="btn btn-danger">Excluir</button>
+					</div>
+					
+				</div><!-- /.modal-content -->
+			</form>
+			
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+</html>

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -17,6 +18,7 @@ import com.everton.cobranca.model.StatusTitulo;
 import com.everton.cobranca.model.Titulo;
 import java.util.Arrays;
 import java.util.List;
+
 
 @Controller
 @RequestMapping(path = "/titulos")
@@ -78,6 +80,24 @@ public class TituloController {
         ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
         mv.addObject(titulo); 
         return mv;
+    }
+
+    // Esse video parece que pode ajudar, sera interessante
+    // https://www.youtube.com/watch?v=o45S3j7MUPE
+    
+    //@DeleteMapping(value = "/{codigo}")
+    //@RequestMapping(value="{codigo}", method = RequestMethod.DELETE)
+    //@DeleteMapping("/{codigo}")
+    /// @PostMapping(value = "/del/{codigo}")
+    
+    // Utilizando o @RestController, posso utilizar tanto no Postman, quanto aqui na aplicacao por POST
+    @RequestMapping(value="/del/{codigo}", method = {RequestMethod.DELETE, RequestMethod.POST})
+    public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
+        System.out.println("tentei excluir aqui... caramba " + codigo);
+        titulosRepository.deleteById(codigo);  // Nesse exemplo, ele buusca pelo ID e depois executa o DELETE
+        
+        attributes.addFlashAttribute("msg", "Titulo excluido corretamente,");
+        return "redirect:/titulos"; // O redirect, faz o GET normal, e vai cair em pesquisar(), que faz a query de pesquisa novamente
     }
     
     /*

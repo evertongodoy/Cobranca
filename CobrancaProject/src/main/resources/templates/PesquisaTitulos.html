@@ -12,6 +12,9 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 </head>
 
 <section layout:fragment="conteudo">
+	
+	<!-- 2.16. Implementando a exclusão 34:08 -->
+	<div layout:insert="~{MensagensTratadasGeral}"></div>
 
     <div class="panel panel-default">
     	<div class="panel-heading">
@@ -47,9 +50,19 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 								th:classappend="${titulo.pendente ? 'label-danger' : titulo.recebido ? 'label-success' : 'label-default' }"></span>
 						</td>
 						<td class="text-center">
-							<a class="btn btn-link btn-xs" th:href="@{/titulos/ {codigoTituloVar} ( codigoTituloVar = ${titulo.codigo} ) }">
+							<a class="btn btn-link btn-xs" th:href="@{/titulos/ {codigoTituloVar} ( codigoTituloVar = ${titulo.codigo} ) }" >
 								<span class="glyphicon glyphicon-pencil"></span>
 							</a>
+							<!-- 2.16. Implementando a exclusão -->
+							<!-- Botao pequeno btn-xs-->
+							<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#modalConfirmacaoExclusao"
+									th:attr="data-codigotitulo=${titulo.codigo}, data-desctitulo=${titulo.descricao}">
+									<!-- th:attr=""... Esta adicionando um atributo novo -->
+									
+									
+								<span class="glyphicon glyphicon-remove"></span>
+							</a>
+							
 						</td>
 					</tr>
 					<!-- No data found -  O "#" eh um utilitario para uso de Lists-->
@@ -70,5 +83,9 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 		</div>    	
     </div>
 
+	<!-- 2.16. Implementando a exclusão -->
+	<!-- Fialogo de Confirmacao para a exclusao -->
+	<div layout:insert="~{DialogoConfirmacaoExclusao}"></div>
+	
 </section>
 </html>

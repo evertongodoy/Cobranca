@@ -7,13 +7,5 @@
 	<div class="alert alert-success" th:if="${!#strings.isEmpty(msg)}">
     	<div th:text="${msg}"></div>
 	</div>
-	
-	<!-- Error message after try to save a new Titulo -->
-	<div class="alert alert-danger" th:if="${#fields.hasAnyErrors()}">
-		<div th:each="erroDetalhado : ${#fields.detailedErrors()}">
-			<span th:text="${erroDetalhado.message}"></span>
-		</div>
-	</div>   
 
-
-</html>
+</html>	
