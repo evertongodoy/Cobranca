@@ -46,3 +46,15 @@ $('#modalConfirmacaoExclusao').on('hide.bs.modal', function(event){
 	$('#actionOriginal').val('');
 	
 });
+
+
+$(function(){
+	// Procure os componentes que sao rel=tooltip e chame a funcao tooltip, ".tooltip();" de acordo com o video dele, mas nao funcionou.
+
+	// Isso funcionou para o ToolTip
+	// Seleciona os componentes pela Class glyphicon-pencil e glyphicon-remove, e aplica o Tooltip neles
+	// Fonte: https://www.tutorialspoint.com/Bootstrap-tooltip-options-method
+	$('.glyphicon-pencil').tooltip({title: "Editar Titulo", placement: "top"});
+	$('.glyphicon-remove').tooltip({title: "Excluir Titulo", placement: "top"});
+	
+});
