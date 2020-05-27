@@ -1,6 +1,7 @@
 package com.everton.cobranca.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -48,10 +49,15 @@ public class TituloController {
             return CADASTRO_VIEW;
         }
         
-        titulosRepository.save(tituloCob);
-        attributes.addFlashAttribute("msg", "Titulo salvo corretamente");
+        try {
+        	titulosRepository.save(tituloCob);
+            attributes.addFlashAttribute("msg", "Titulo salvo corretamente");
+            return "redirect:/titulos/novo";
+		} catch (DataIntegrityViolationException e) {
+			err.rejectValue("dataVencimento", null, "Formato invalido de data");
+			return CADASTRO_VIEW;
+		}
         
-        return "redirect:/titulos/novo";
     }
     
     // Deixar um atributo disponivel para as paginas da view 
