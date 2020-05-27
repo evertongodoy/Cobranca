@@ -1,7 +1,6 @@
 package com.everton.cobranca.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -17,6 +16,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.everton.cobranca.TitulosRepo;
 import com.everton.cobranca.model.StatusTitulo;
 import com.everton.cobranca.model.Titulo;
+import com.everton.cobranca.service.CadastroTituloService;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -29,6 +30,9 @@ public class TituloController {
     
     @Autowired
     private TitulosRepo titulosRepository;
+    
+    @Autowired
+    private CadastroTituloService cadastroTituloService;
 
     //Return the name of the View
     // @RequestMapping(value = "/novo")
@@ -50,11 +54,14 @@ public class TituloController {
         }
         
         try {
-        	titulosRepository.save(tituloCob);
+        	// Removida na aula 3.4. Camada de Servico e trocada por cadastroTituloService.salvarTitulo()...
+        	//titulosRepository.save(tituloCob);
+        	cadastroTituloService.salvarTitulo(tituloCob);
+        	
             attributes.addFlashAttribute("msg", "Titulo salvo corretamente");
             return "redirect:/titulos/novo";
-		} catch (DataIntegrityViolationException e) {
-			err.rejectValue("dataVencimento", null, "Formato invalido de data");
+		} catch (IllegalArgumentException e) {
+			err.rejectValue("dataVencimento", null, e.getMessage());
 			return CADASTRO_VIEW;
 		}
         
@@ -100,7 +107,10 @@ public class TituloController {
     @RequestMapping(value="/del/{codigo}", method = {RequestMethod.DELETE, RequestMethod.POST})
     public String excluir(@PathVariable Long codigo, RedirectAttributes attributes) {
         System.out.println("tentei excluir aqui... caramba " + codigo);
-        titulosRepository.deleteById(codigo);  // Nesse exemplo, ele buusca pelo ID e depois executa o DELETE
+        
+        // // Removida na aula 3.4. Camada de Servico e trocada por cadastroTituloService.excluirTitulo()...
+        // titulosRepository.deleteById(codigo);  // Nesse exemplo, ele buusca pelo ID e depois executa o DELETE
+        cadastroTituloService.excluirTitulo(codigo);
         
         attributes.addFlashAttribute("msg", "Titulo excluido corretamente,");
         return "redirect:/titulos"; // O redirect, faz o GET normal, e vai cair em pesquisar(), que faz a query de pesquisa novamente
