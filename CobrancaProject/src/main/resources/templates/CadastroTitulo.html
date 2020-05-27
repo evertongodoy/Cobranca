@@ -54,7 +54,7 @@
 				<div class="form-group">
 					<label for="status" class="col-sm-2 control-label">Status</label>
 					<div class="col-sm-2">
-						<select class="form-control" id="status" name="status">
+						<select class="form-control" id="status" name="status" th:field="*{status}"> <!-- th:field serve para manter os valores no formulario, e falou nesse campo -->
 							<option th:each="status : ${lstStatusTitulo}" th:value=${status} th:text="${status.descricao}"></option>
                     	</select>
                     </div>
