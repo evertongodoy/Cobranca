@@ -5,6 +5,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.everton.cobranca.TitulosRepo;
+import com.everton.cobranca.model.StatusTitulo;
 import com.everton.cobranca.model.Titulo;
 
 // Teria que ser no minimo como @Component, mas no caso, agora sera uma classe de Servico, por isso @Service
@@ -29,6 +30,15 @@ public class CadastroTituloService {
 	public void excluirTitulo(Long codigo) {
 		titulosRepoService.deleteById(codigo);
 		
+	}
+
+	
+	public String receberTitulo(Long codTituloReceber) {
+		// Recuperando o Titulo que tem esse codigo
+		Titulo titulo = titulosRepoService.getOne(codTituloReceber);   // findOne -> getOne
+		titulo.setStatus(StatusTitulo.RECEBIDO);
+		titulosRepoService.save(titulo);
+		return StatusTitulo.RECEBIDO.getDescricao();
 	}
 	
 }

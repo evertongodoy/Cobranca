@@ -75,7 +75,29 @@ $(function(){
 		// Vai pegar a URL pelo botao
 		var urlRecebimento = btnReceber.attr('href');
 		
-		console.log('urlRecebimento', urlRecebimento);
+		//console.log('urlRecebimento', urlRecebimento);
+		// Requisicao via AJAX
+		var response = $.ajax({
+			url: urlRecebimento,
+			type: 'PUT'
+		});
+		
+		// Se nao ocorreu erro - Adiciona uma funcao que recebe o que voltou la do servidor por exemplo, um OK.
+		response.done(function(e){
+			// Removendo o botao de Recebimento
+			btnReceber.hide(); // hide() eh um metodo do JQuery para aquele botao.
+			
+			// Alterando o Status para Recebido
+			var codigoRecebido = btnReceber.data('codigotitulorecebido'); // Recuperando o Codigo que esta la na pagina pelo atributo th:attr="data-codigotituloRecebido=${titulo.codigo}" 
+			$('[data-identificador=' + codigoRecebido + ']').html('<span class="label label-success">' + e + '</span>');  // Seletor -  e vai atribuir para th:attr="data-role=${titulo.codigo}", e vai Trocar o <span>
+			
+		});
+		
+		// Se ocorreu erro
+		response.fail(function(e){
+			console.log(e);
+			alert('Erro ao receber cobranca');
+		});
 
 	});
 	
@@ -116,4 +138,19 @@ Exemplo:
  Tem algumas opcoes que podem ser vistas aqui:
 
 - https://github.com/plentz/jquery-maskmoney#options
+*/
+
+/*
+
+AJAX do JQuery
+
+ Funcao AJAX do JQuery 
+   $.ajax({ ... });
+   
+ Essa funcao devolve um response, que eh um objeto que nos conseguimos adicionar outras funcoes se der Sucesso ou se der Falha
+   var response = $.ajax({ ... });
+   
+   
+   
+
 */

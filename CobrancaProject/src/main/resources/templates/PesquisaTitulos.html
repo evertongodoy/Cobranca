@@ -45,7 +45,7 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 						<td th:text="${titulo.descricao}"></td>
 						<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>  <!-- Para formatar o dado na tela, utiliza-se 2x {}, sera automaticamente utilizado a formatacao da classe no Model, pelo atributo -->
 						<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td> <!-- Para concatentar uma String no text, utiliza-se o PIPE  |  |  -->
-						<td class="text-center">
+						<td class="text-center" th:attr="data-identificador=${titulo.codigo}">  <!-- th:attr Adicionou o atributo qualquer para conseguir fazer o recebimento data-identificado=${xxx}, onde identificado eh meu nome qualquer-->
 							<span class="label" th:text="${titulo.status.descricao}"
 								th:classappend="${titulo.pendente ? 'label-danger' : titulo.recebido ? 'label-success' : 'label-default' }"></span>
 						</td>
@@ -62,9 +62,10 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 								<span class="glyphicon glyphicon-remove"></span>
 							</a>
 							<!-- 3.6. Recebendo o título com Ajax - parte 1 -->
+							<!-- Lembrando que o th:attr="data-xxxx"  , o xxxx SEMPRE TEM QUE SER INTEIRO MINUSCULO, NAO PODE CAMEL CASE-->
 							<a class="btn btn-link btn-xs eg-atualizar-status" th:if="${titulo.pendente}"
-							    th:href="@{/titulos/{codigoTit}/receber(codigoTit = ${titulo.codigo} ) }" 
-							> <!-- Sera visualizado se o Titulo for Pendente e th:href, pq vai precisar do codigo, atualizacao no Titulo para aquele codigo, sendo Receber. Sera via PUT, JAVASCRIPT e AJAX-->
+							    th:attr="data-codigotitulorecebido=${titulo.codigo}" 
+							    th:href="@{/titulos/{codigoTit}/receber(codigoTit = ${titulo.codigo} ) }" > <!-- Sera visualizado se o Titulo for Pendente e th:href, pq vai precisar do codigo, atualizacao no Titulo para aquele codigo, sendo Receber. Sera via PUT, JAVASCRIPT e AJAX-->
 							    <span class="glyphicon glyphicon-check"></span>
 							</a>
 						</td>

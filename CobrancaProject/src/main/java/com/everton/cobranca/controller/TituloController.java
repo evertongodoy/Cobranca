@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -115,9 +116,11 @@ public class TituloController {
         return "redirect:/titulos"; // O redirect, faz o GET normal, e vai cair em pesquisar(), que faz a query de pesquisa novamente
     }
     
-    @RequestMapping("??????")
-    public void receber(Long codigoTitulo) {
-    	
+    // @ResponseBody, o Spring entende que voce nao quer retornar uma View, mas uma String como o corpo da resposta
+    @RequestMapping(value = "/{codTituloReceber}/receber", method = RequestMethod.PUT)
+    public @ResponseBody String receber(@PathVariable Long codTituloReceber) { // Vai receber um codTituloReceber que esta no PathVariable, o codigo dessa linha vai ser o codigo da linha de cima
+    	//System.out.println(" >>> Codigo " + codTituloReceber);
+    	return cadastroTituloService.receberTitulo(codTituloReceber);
     }
     
     /*
