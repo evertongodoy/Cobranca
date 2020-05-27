@@ -56,11 +56,28 @@ $(function(){
 	// Fonte: https://www.tutorialspoint.com/Bootstrap-tooltip-options-method
 	$('.glyphicon-pencil').tooltip({title: "Editar Titulo", placement: "top"});
 	$('.glyphicon-remove').tooltip({title: "Excluir Titulo", placement: "top"});
-	
+	$('.glyphicon-check').tooltip({title: "Receber Titulo", placement: "top"});
 	
 	// Tratamento do Currency/Maskmoney
 	// 1. Encontre todos os elementos que tenham a classe eg-moeda -> $('.eg-moeda'), e chame a funcao maskMoney();, podem ser passadas opcoes
 	$('.eg-moeda').maskMoney({decimal: ',' , thousands: '.' , allowZero: true, });
+	
+	// Toda vez que carregar a pagina, serao selecionados os elementos que possuierem essa classe, no caso: eg-atualizar-status
+	// Toda vez que clicar nesse link, vai executar uma funcao, que recebe o parametro EVENT do click "Evento do Clique"
+	$('.eg-atualizar-status').on('click', function (event) {
+
+		// Nao fazer o comportamento padrao do clique do link
+		event.preventDefault();
+		
+		// Pegar o Botao currentTarget porque esta vindo de um LINK.
+		var btnReceber = $(event.currentTarget);
+		
+		// Vai pegar a URL pelo botao
+		var urlRecebimento = btnReceber.attr('href');
+		
+		console.log('urlRecebimento', urlRecebimento);
+
+	});
 	
 	
 });

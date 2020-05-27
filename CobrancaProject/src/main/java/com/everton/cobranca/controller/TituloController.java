@@ -21,7 +21,6 @@ import com.everton.cobranca.service.CadastroTituloService;
 import java.util.Arrays;
 import java.util.List;
 
-
 @Controller
 @RequestMapping(path = "/titulos")
 public class TituloController {
@@ -114,6 +113,11 @@ public class TituloController {
         
         attributes.addFlashAttribute("msg", "Titulo excluido corretamente,");
         return "redirect:/titulos"; // O redirect, faz o GET normal, e vai cair em pesquisar(), que faz a query de pesquisa novamente
+    }
+    
+    @RequestMapping("??????")
+    public void receber(Long codigoTitulo) {
+    	
     }
     
     /*
