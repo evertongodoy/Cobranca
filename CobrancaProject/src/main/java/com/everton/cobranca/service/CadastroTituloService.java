@@ -1,12 +1,15 @@
 package com.everton.cobranca.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
-import com.everton.cobranca.TitulosRepo;
 import com.everton.cobranca.model.StatusTitulo;
 import com.everton.cobranca.model.Titulo;
+import com.everton.cobranca.repository.TitulosRepo;
+import com.everton.cobranca.repository.filter.TituloFilter;
 
 // Teria que ser no minimo como @Component, mas no caso, agora sera uma classe de Servico, por isso @Service
 
@@ -39,6 +42,12 @@ public class CadastroTituloService {
 		titulo.setStatus(StatusTitulo.RECEBIDO);
 		titulosRepoService.save(titulo);
 		return StatusTitulo.RECEBIDO.getDescricao();
+	}
+	
+	public List<Titulo> filtrarTit(TituloFilter flt){
+        //List<Titulo> lstTit = titulosRepository.findAll();
+    	String dsc = flt.getDescricao() == null ? "" : flt.getDescricao(); // Nao pode passar null
+    	return titulosRepoService.findByDescricaoContaining(dsc);
 	}
 	
 }

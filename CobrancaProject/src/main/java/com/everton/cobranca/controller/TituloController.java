@@ -1,6 +1,7 @@
 package com.everton.cobranca.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -10,13 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.everton.cobranca.TitulosRepo;
 import com.everton.cobranca.model.StatusTitulo;
 import com.everton.cobranca.model.Titulo;
+import com.everton.cobranca.repository.TitulosRepo;
+import com.everton.cobranca.repository.filter.TituloFilter;
 import com.everton.cobranca.service.CadastroTituloService;
 
 import java.util.Arrays;
@@ -74,23 +77,27 @@ public class TituloController {
     }
     
     
-    //@RequestMapping
+    //@RequestMapping(method = RequestMethod.GET)
+    // @RequestParam(defaultValue = ""), indica que o texto Default sera uma String VAZIA, no caso "", pois quando vc faz a sua query, eh obrigatorio uma STRING
+    
+    //public ModelAndView pesquisar(@RequestParam(defaultValue = "") String dsTit) { // por ex, se a variavel for dsTit, la no html, o campo name="dsTit", tem que ter o msm nome
+    // @ModelAttribute filtroPesquisa eh o nome do atributo que esta la no th:object. O Spring que vai criar esse objeto que esta anexado la no HTML
     @GetMapping()
-    public ModelAndView pesquisar() {
-        
-        List<Titulo> lstTit = titulosRepository.findAll();
-        
+    public ModelAndView pesquisar(@ModelAttribute("filtroPesquisa") TituloFilter filtroPesquisar) {  // A ideia do Filtro eh a mesma ideia do Titulo, mas o FIltro nao eh uma Entidade, serve so para manter a informacao de pesquisana tela
+    	
+    	List<Titulo> lstTit = cadastroTituloService.filtrarTit(filtroPesquisar);
+    	
         ModelAndView mv = new ModelAndView("PesquisaTitulos");
         mv.addObject("lstTitulo", lstTit);
-        
+        System.out.println("passou a qui na Pesquisa: " + filtroPesquisar.getDescricao());
         return mv;
     }
     
     @GetMapping(path = "/{codigoTitulo}")
-    public ModelAndView editar(@PathVariable Long codigoTitulo) {
-        Titulo titulo = titulosRepository.getOne(codigoTitulo);
-        
-        ModelAndView mv = new ModelAndView(CADASTRO_VIEW);
+    public ModelAndView editar(@PathVariable Long codigoTitulo) {  
+        Titulo titulo = titulosRepository.getOne(codigoTitulo); // Ainda estou usando o titulosRepository e ele nao, porque nesse ponto se as variaveis forem com 
+                                                                // os mesmos nomes do atributos do Bean, o proprio Spring identifica que voce precisa fazer a  
+        ModelAndView mv = new ModelAndView(CADASTRO_VIEW);      // SELECT por CODIGO, e voce nao precisa fazer no dedo o getOne()...
         mv.addObject(titulo); 
         return mv;
     }
@@ -122,6 +129,8 @@ public class TituloController {
     	//System.out.println(" >>> Codigo " + codTituloReceber);
     	return cadastroTituloService.receberTitulo(codTituloReceber);
     }
+    
+    
     
     /*
      * Observacoes

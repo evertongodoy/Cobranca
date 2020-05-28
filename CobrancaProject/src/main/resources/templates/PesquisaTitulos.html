@@ -30,12 +30,12 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 
              <!-- 3.9. Protótipo da caixa de pesquisa -->
              <!-- Criacao do campo de Pesquisa de Titulo -->
-             <form method="GET" class="form-horizontal">
+             <form method="GET" class="form-horizontal" action="/titulos" th:object="${filtroPesquisa}">
                  <div class="form-group">
                      <div class="col-sm-4">
                          <div class="input-group">
                              <input class="form-control" placeholder="Procurando por qual Titulo ?"
-                                 autofocus="autofocus"></input>
+                                 autofocus="autofocus" th:field="*{descricao}"></input> <!-- name:descricao, para recuperar o valor no Controller --> <!-- Tirou o name="dsTit", para ulitizar o FILTRO -->
                              <span class="input-group-btn">
                                  <button type="submit" class="btn btn-default">
                                      <i class="glyphicon glyphicon-search"></i>
