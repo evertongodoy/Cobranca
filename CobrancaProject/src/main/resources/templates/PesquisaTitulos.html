@@ -27,6 +27,25 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 
     	<!--  Criando a tabela dos dados-->
 		<div class="panel-body">
+
+             <!-- 3.9. Protótipo da caixa de pesquisa -->
+             <!-- Criacao do campo de Pesquisa de Titulo -->
+             <form method="GET" class="form-horizontal">
+                 <div class="form-group">
+                     <div class="col-sm-4">
+                         <div class="input-group">
+                             <input class="form-control" placeholder="Procurando por qual Titulo ?"
+                                 autofocus="autofocus"></input>
+                             <span class="input-group-btn">
+                                 <button type="submit" class="btn btn-default">
+                                     <i class="glyphicon glyphicon-search"></i>
+                                 </button>
+                             </span>  
+                         </div>
+                     </div>
+                 </div>
+             </form>
+
 			<table class="table table-bordered table-striped">
 				<thead>
 					<tr>
