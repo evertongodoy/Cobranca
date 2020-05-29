@@ -21,7 +21,7 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
     		<!-- Clearfix ajuda no ajuste dos conteudos flutuantes -->
     		<div class="clearfix">
     			<h1 class="panel-title aw-titulo-panel">Pesquisa de título</h1>
-    		    <a class="btn btn-link aw-link-panel" href="/titulos/novo">Cadastrar</a>
+    		    <a class="btn btn-link aw-link-panel" th:href="@{/titulos/novo}">Cadastrar</a>
     		</div>
     	</div>
 
@@ -30,7 +30,7 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
 
              <!-- 3.9. Protótipo da caixa de pesquisa -->
              <!-- Criacao do campo de Pesquisa de Titulo -->
-             <form method="GET" class="form-horizontal" action="/titulos" th:object="${filtroPesquisa}">
+             <form method="GET" class="form-horizontal" ath:ction="@{/titulos}" th:object="${filtroPesquisa}">
                  <div class="form-group">
                      <div class="col-sm-4">
                          <div class="input-group">

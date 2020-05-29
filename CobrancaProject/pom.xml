@@ -13,7 +13,8 @@
 	<groupId>com.everton</groupId>
 	<artifactId>Cobranca</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>Cobranca System</name>
+	<name>Cobranca</name>
+	<packaging>war</packaging>
 	<description>Study project using spring boot during I am watching the Algaworks videos</description>
 
 	<properties>
@@ -42,12 +43,21 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 
+        <!-- TOMCAT externo marked the embedded servlet container as provided 
+		<dependency>
+		   <groupId>org.springframework.boot</groupId>
+		   <artifactId>spring-boot-starter-tomcat</artifactId>
+		   <scope>provided</scope>
+		</dependency> --> 
+        
+
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
 			<optional>true</optional>
 		</dependency>
+		
 		<!-- 
 		<dependency>
 			<groupId>com.h2database</groupId>
@@ -68,8 +78,6 @@
 	        <version>6.0.13.Final</version>
 	    </dependency>
 	    
-	      
-		 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -101,6 +109,7 @@
 	</dependencies>
 
 	<build>
+	<finalName>${project.artifactId}</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>

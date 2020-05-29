@@ -6,7 +6,7 @@
 	<div class="modal fade" tabindex="-1" id="modalConfirmacaoExclusao" data-keyboard="false" data-backdrop="static">
 		<div class="modal-dialog">
 			
-			<form action="/titulos/del/" method="POST">  <!-- DELETE? No, GET and POST are the only valid HTTP method values for the method attribute. -->
+			<form th:action="@{/titulos/del/}" method="POST">  <!-- DELETE? No, GET and POST are the only valid HTTP method values for the method attribute. -->
 				
 				<input type="hidden" name="_method" value="delete">
 				<input type="hidden" id="actionOriginal" name="actionOriginal" value="">

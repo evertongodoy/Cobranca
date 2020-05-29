@@ -10,7 +10,7 @@
 
 <section layout:fragment="conteudo">
     
-    <form class="form-horizontal" method="POST" action="/titulos" th:object="${titulo}">
+    <form class="form-horizontal" method="POST" th:action="@{/titulos}" th:object="${titulo}">
        
        	<div layout:insert="~{MensagensTratadasGeral}"></div>
        	<div layout:insert="~{MensagensTratadasErro}"></div>
@@ -21,7 +21,7 @@
     			<!-- Clearfix ajuda no ajuste dos conteudos flutuantes -->
 		   		<div class="clearfix">
 		   			<h1 class="panel-title aw-titulo-panel">Cadastro de título</h1>
-		   		    <a class="btn btn-link aw-link-panel" href="/titulos">Pesquisar</a>
+		   		    <a class="btn btn-link aw-link-panel" th:href="@{/titulos}">Pesquisar</a>
 		   		</div>
     		</div>
     		

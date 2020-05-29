@@ -1,7 +1,9 @@
 package com.everton.cobranca.controller;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Errors;
 import org.springframework.validation.annotation.Validated;
@@ -11,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -21,9 +22,6 @@ import com.everton.cobranca.model.Titulo;
 import com.everton.cobranca.repository.TitulosRepo;
 import com.everton.cobranca.repository.filter.TituloFilter;
 import com.everton.cobranca.service.CadastroTituloService;
-
-import java.util.Arrays;
-import java.util.List;
 
 @Controller
 @RequestMapping(path = "/titulos")
