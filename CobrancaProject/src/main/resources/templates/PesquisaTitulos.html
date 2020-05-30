@@ -45,66 +45,69 @@ xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"-->
                      </div>
                  </div>
              </form>
-
-			<table class="table table-bordered table-striped">
-				<thead>
-					<tr>
-						<th class="text-center col-md-1">#</th>
-						<th>Descri&ccedil;&atilde;o</th>
-						<th class="text-center col-md-2">Data de Vencimento</th>
-						<th class="text-right col-md-2">Valor</th>
-						<th class="text-center col-md-2">Status</th>
-						<th class="col-md-1"></th>
-					</tr>
-				</thead>
-				<!--  -->
-				<tbody>
-					<tr th:each="titulo : ${lstTitulo}">
-						<td class="text-center" th:text="${titulo.codigo}"></td>
-						<td th:text="${titulo.descricao}"></td>
-						<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>  <!-- Para formatar o dado na tela, utiliza-se 2x {}, sera automaticamente utilizado a formatacao da classe no Model, pelo atributo -->
-						<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td> <!-- Para concatentar uma String no text, utiliza-se o PIPE  |  |  -->
-						<td class="text-center" th:attr="data-identificador=${titulo.codigo}">  <!-- th:attr Adicionou o atributo qualquer para conseguir fazer o recebimento data-identificado=${xxx}, onde identificado eh meu nome qualquer-->
-							<span class="label" th:text="${titulo.status.descricao}"
-								th:classappend="${titulo.pendente ? 'label-danger' : titulo.recebido ? 'label-success' : 'label-default' }"></span>
-						</td>
+            <!-- 3.12. Ajustes responsivos -->
+            <!-- Classe table-responsive, eh uma classe do proprio bootstrap -->
+            <div class="table-responsive">
+				<table class="table table-bordered table-striped">
+					<thead>
+						<tr>
+							<th class="text-center col-md-1">#</th>
+							<th>Descri&ccedil;&atilde;o</th>
+							<th class="text-center col-md-2">Data de Vencimento</th>
+							<th class="text-right col-md-2">Valor</th>
+							<th class="text-center col-md-2">Status</th>
+							<th class="col-md-1"></th>
+						</tr>
+					</thead>
+					<!--  -->
+					<tbody>
+						<tr th:each="titulo : ${lstTitulo}">
+							<td class="text-center" th:text="${titulo.codigo}"></td>
+							<td th:text="${titulo.descricao}"></td>
+							<td class="text-center" th:text="${{titulo.dataVencimento}}"></td>  <!-- Para formatar o dado na tela, utiliza-se 2x {}, sera automaticamente utilizado a formatacao da classe no Model, pelo atributo -->
+							<td class="text-right" th:text="|R$ ${{titulo.valor}}|"></td> <!-- Para concatentar uma String no text, utiliza-se o PIPE  |  |  -->
+							<td class="text-center" th:attr="data-identificador=${titulo.codigo}">  <!-- th:attr Adicionou o atributo qualquer para conseguir fazer o recebimento data-identificado=${xxx}, onde identificado eh meu nome qualquer-->
+								<span class="label" th:text="${titulo.status.descricao}"
+									th:classappend="${titulo.pendente ? 'label-danger' : titulo.recebido ? 'label-success' : 'label-default' }"></span>
+							</td>
+							
+							<td class="text-center">
+								<a class="btn btn-link btn-xs" th:href="@{/titulos/ {codigoTituloVar} ( codigoTituloVar = ${titulo.codigo} ) }">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+								<!-- 2.16. Implementando a exclusão  title="Editar titulo" rel="tooltip" data-placement="top" -->
+								<!-- Botao pequeno btn-xs-->
+								<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#modalConfirmacaoExclusao"
+										th:attr="data-codigotitulo=${titulo.codigo}, data-desctitulo=${titulo.descricao}">
+										<!-- th:attr=""... Esta adicionando um atributo novo -->
+									<span class="glyphicon glyphicon-remove"></span>
+								</a>
+								<!-- 3.6. Recebendo o título com Ajax - parte 1 -->
+								<!-- Lembrando que o th:attr="data-xxxx"  , o xxxx SEMPRE TEM QUE SER INTEIRO MINUSCULO, NAO PODE CAMEL CASE-->
+								<a class="btn btn-link btn-xs eg-atualizar-status" th:if="${titulo.pendente}"
+								    th:attr="data-codigotitulorecebido=${titulo.codigo}" 
+								    th:href="@{/titulos/{codigoTit}/receber(codigoTit = ${titulo.codigo} ) }" > <!-- Sera visualizado se o Titulo for Pendente e th:href, pq vai precisar do codigo, atualizacao no Titulo para aquele codigo, sendo Receber. Sera via PUT, JAVASCRIPT e AJAX-->
+								    <span class="glyphicon glyphicon-check"></span>
+								</a>
+							</td>
+							
+						</tr>
+						<!-- No data found -  O "#" eh um utilitario para uso de Lists-->
+						<tr>
+							<!-- IF -->
+							<td colspan="6" th:if="${#lists.isEmpty(lstTitulo)}">Nao existem registros</td>
+							<!-- ELSE -->
+							<td colspan="6" th:if="${not #lists.isEmpty(lstTitulo)}" th:text="|${#lists.size(lstTitulo)} registro(s)|"></td>
+						</tr>
 						
-						<td class="text-center">
-							<a class="btn btn-link btn-xs" th:href="@{/titulos/ {codigoTituloVar} ( codigoTituloVar = ${titulo.codigo} ) }">
-								<span class="glyphicon glyphicon-pencil"></span>
-							</a>
-							<!-- 2.16. Implementando a exclusão  title="Editar titulo" rel="tooltip" data-placement="top" -->
-							<!-- Botao pequeno btn-xs-->
-							<a class="btn btn-link btn-xs" data-toggle="modal" data-target="#modalConfirmacaoExclusao"
-									th:attr="data-codigotitulo=${titulo.codigo}, data-desctitulo=${titulo.descricao}">
-									<!-- th:attr=""... Esta adicionando um atributo novo -->
-								<span class="glyphicon glyphicon-remove"></span>
-							</a>
-							<!-- 3.6. Recebendo o título com Ajax - parte 1 -->
-							<!-- Lembrando que o th:attr="data-xxxx"  , o xxxx SEMPRE TEM QUE SER INTEIRO MINUSCULO, NAO PODE CAMEL CASE-->
-							<a class="btn btn-link btn-xs eg-atualizar-status" th:if="${titulo.pendente}"
-							    th:attr="data-codigotitulorecebido=${titulo.codigo}" 
-							    th:href="@{/titulos/{codigoTit}/receber(codigoTit = ${titulo.codigo} ) }" > <!-- Sera visualizado se o Titulo for Pendente e th:href, pq vai precisar do codigo, atualizacao no Titulo para aquele codigo, sendo Receber. Sera via PUT, JAVASCRIPT e AJAX-->
-							    <span class="glyphicon glyphicon-check"></span>
-							</a>
-						</td>
-						
-					</tr>
-					<!-- No data found -  O "#" eh um utilitario para uso de Lists-->
-					<tr>
-						<!-- IF -->
-						<td colspan="6" th:if="${#lists.isEmpty(lstTitulo)}">Nao existem registros</td>
-						<!-- ELSE -->
-						<td colspan="6" th:if="${not #lists.isEmpty(lstTitulo)}" th:text="|${#lists.size(lstTitulo)} registro(s)|"></td>
-					</tr>
-					
-					<!-- Class 2.12
-					     - Selection Variable Expressions = Ajuda a manter os dados na tela durante as validacoes
-					     - Message Expressions = Para Internacionalizacao u utilizar um arquivo de Properties
-					     - Link URL Expressions = Vai melhorar a utilizacao dos HREF
-					 -->
-				</tbody>
-			</table>
+						<!-- Class 2.12
+						     - Selection Variable Expressions = Ajuda a manter os dados na tela durante as validacoes
+						     - Message Expressions = Para Internacionalizacao u utilizar um arquivo de Properties
+						     - Link URL Expressions = Vai melhorar a utilizacao dos HREF
+						 -->
+					</tbody>
+				</table>
+			</div> <!-- table-responsive -->	
 		</div>    	
     </div>
 	<!-- 2.16. Implementando a exclusão -->
